@@ -1,6 +1,6 @@
 # for some reasons, you should install this packages at first
 options(encoding = 'UTF-8')
-options("repos" = c(CRAN="https://mirrors.tuna.tsinghua.edu.cn/CRAN/"))
+options("repos" = c(CRAN="https://https://cran.microsoft.com"))
 options(BioC_mirror="https://mirrors.tuna.tsinghua.edu.cn/bioconductor")
 
 require_packages = c(

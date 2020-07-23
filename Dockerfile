@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER leoatchina,leoatchina@gmail.com
 ADD sources.list /etc/apt/sources.list
 RUN apt update -y && apt upgrade -y && \
     mkdir -p /root/.cpan && \
@@ -61,7 +60,7 @@ RUN apt update && \
 ENV PATH=/opt/miniconda3/bin:$PATH
 RUN cd /tmp && \
     rm -f /bin/bash && ln -s /usr/local/bin/bash /bin/bash && \
-    curl https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda3.sh && \
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda3.sh && \
     bash miniconda3.sh -b -p /opt/miniconda3 && \
     conda update -n base -c defaults conda pip && \
     conda clean -a -y && \
@@ -69,7 +68,6 @@ RUN cd /tmp && \
 ADD .condarc /root
 RUN conda install -n base -c conda-forge vim xeus-python time libxml2 libxslt libssh2 krb5 ripgrep lazygit zsh yarn nodejs jupyterlab=2.1.5 && \
     ln -s /opt/miniconda3/bin/zsh /usr/local/bin/zsh && \
-    /opt/miniconda3/bin/jupyter labextension install @jupyterlab/debugger && \
     /opt/miniconda3/bin/jupyter lab build && \
     conda clean -a -y
 RUN /opt/miniconda3/bin/pip install --no-cache-dir pynvim neovim-remote flake8 pygments ranger-fm python-language-server && \
@@ -95,19 +93,22 @@ RUN mkdir -p /etc/rstudio /opt/config /opt/log /opt/rc && chmod -R 755 /opt/conf
 COPY .bashrc .inputrc /opt/rc/
 ## users ports and dirs and configs
 RUN echo "export LC_ALL='C.UTF-8'" >> /etc/profile
-ENV LANG C.UTF-8
-ENV WKUID=1000
-ENV WKUSER=datasci
-ENV PASSWD=datasci
-ENV COUNTRY=CN
-ENV PROVINCE=ZJ
-ENV CITY=HZ
-ENV ORGANIZE=SELF
-ENV WEB=leatchina.data.sci
-ENV IP=0.0.0.0
-ENV CHOWN=1
-ENTRYPOINT ["bash", "/opt/config/entrypoint.sh"]
-EXPOSE 8888 8787 8686 8585
+ENV LANG C.UTF-8 \
+    WKUID=1000 \
+    WKUSER=datasci \
+    PASSWD=datasci \
+    COUNTRY=CN \
+    PROVINCE=FJ \
+    CITY=XM \
+    ORGANIZE=XMU \
+    WEB=xmu.edu.cn \
+    IP=0.0.0.0 \
+    CHOWN=1
+
 ## config file
 COPY rserver.conf /etc/rstudio/
 COPY jupyter_lab_config.py supervisord.conf passwd.py entrypoint.sh /opt/config/
+
+
+EXPOSE 8888 8787 8686 8585
+ENTRYPOINT ["bash", "/opt/config/entrypoint.sh"]
