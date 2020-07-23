@@ -1,7 +1,7 @@
 FROM leoatchina/datasci
 
-RUN apt-get install libxml2-dev && \
-    pip pip install -U loompy && \
+RUN apt-get install -y libxml2-dev && \
+    pip install -U loompy && \
     pip install scanpy && \
     R -e 'install.packages("XML", repos = "http://www.omegahat.net/R")' && \
     R -e 'install.packages(c("BiocManager","devtools","Seurat") ,repos = "http://cran.us.r-project.org")' && \
