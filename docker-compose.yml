@@ -1,7 +1,7 @@
-version: "3"  # xml版本
+version: "3.2"  # xml版本
 services:
   datasci:
-    image: wangshun/datasci
+    image: registry.cn-hangzhou.aliyuncs.com/wangshun1121/scrna_quant_analysis:0.1
     environment:
       - PASSWD=wangshun1121  # PASSWD
       - ROOTPASSWD=wangshun1121 # 区分普通用户的root密码，如没有，和普通用户相同
@@ -14,11 +14,22 @@ services:
       - 8686:8686
       - 8585:8585
     volumes:   # 位置映射，右docker内部，左实际
-      - $PWD/pkgs:/opt/miniconda3/pkgs   # 这个不映射在某些低级内核linux上用conda安装软件时会有问题
-      - $PWD/wangshun:/home/wangshun # 工作目录， 要和上面的WKUSER一致
-      - $PWD/log:/opt/log  # 除rstudio外的log目录
-      - $PWD/root:/root # root目录
+#      - $PWD/pkgs:/opt/miniconda3/pkgs   # 这个不映射在某些低级内核linux上用conda安装软件时会有问题
+      - home:/home/wangshun # 工作目录， 要和上面的WKUSER一致
+      - public:/mnt
+#      - $PWD/log:/opt/log  # 除rstudio外的log目录
+#      - $PWD/root:/root # root目录
     container_name: datasci
-
+volumes:
+  home:
+    driver_opts:
+      type: "nfs"
+      o: "addr=29f4f49349-kix12.cn-shenzhen.nas.aliyuncs.com,nolock,vers=3,nolock,proto=tcp,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport"
+      device: ":/wangshun"
+  public:
+    driver_opts:
+      type: "nfs"
+      o: "addr=29f4f49349-kix12.cn-shenzhen.nas.aliyuncs.com,nolock,vers=3,nolock,proto=tcp,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport"
+      device: ":/public"
 
     

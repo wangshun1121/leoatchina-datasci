@@ -9,6 +9,6 @@ RUN apt-get install -y libxml2-dev libgsl0-dev && \
     R -e 'library("devtools");install_github(repo = "hhoeflin/hdf5r");install_github(repo = "mojaveazure/loomR", ref = "develop")' && \
     R -e 'library("devtools");install_git("https://gitee.com/wangshun1121/scRepertoire",branch = "dev")'
 
-# COPY entrypoint.sh /opt/config/entrypoint.sh
+COPY entrypoint.sh /opt/config/entrypoint.sh
 ENTRYPOINT ["bash", "/opt/config/entrypoint.sh"]
 EXPOSE 8888 8787 8686 8585
