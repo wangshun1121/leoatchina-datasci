@@ -4,6 +4,7 @@ RUN apt-get install -y libxml2-dev libgsl0-dev && \
     pip install -U loompy && \
     pip install scanpy && \
     R -e 'install.packages("XML", repos = "http://www.omegahat.net/R")' && \
+    R -e 'install.packages("withr",repos = "http://cran.us.r-project.org")' && \
     R -e 'withr::with_makevars(c(PKG_LIBS = "-liconv"), install.packages(c("haven","readxl")), assignment = "+=")' && \
     R -e 'install.packages(c("BiocManager","devtools","Seurat","statmod","funr","rjags","ggpubr","RServe") ,repos = "http://cran.us.r-project.org")' && \
     R -e 'BiocManager::install(c("monocle","rhdf5","SingleCellExperiment","scater","SingleR","scran","scRNAseq","CHETAH","infercnv","CellChat","AUCell","GSEABase"))' && \
