@@ -13,4 +13,4 @@ RUN apt-get install -y libxml2-dev libgsl0-dev && \
 
 # COPY entrypoint.sh /opt/config/entrypoint.sh
 ENTRYPOINT ["bash", "/opt/config/entrypoint.sh"]
-EXPOSE 8888 8787 8686 8585
+EXPOSE 8888 8787 8686 8585 6311
